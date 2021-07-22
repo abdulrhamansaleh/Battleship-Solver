@@ -208,9 +208,9 @@ class user_board:
             win_alert = tk.Label(self.board_frame, text=f'BOARD HAS BEEN DEFEATED {self.attack_counter} ATTACKS')
             win_alert.pack()
             win_alert.place(x=50, y=50, width=550, height=550)
+            self.board_frame.mainloop()
             time.sleep(3)
             self.board_frame.destroy()
-            self.board_frame.mainloop()
 
     # METHOD TO PLACE SHIPS ACCORDING TO SPECIFIED SHIP CONSTRAINTS
     def placing_ships(self, board_row, board_col, ship_orientation, ship_colour, iteration):
@@ -559,4 +559,3 @@ class user_board:
                 self.board_frame.update()
                 self.ship_counter = self.ship_counter + 1
                 self.start_game()
-
