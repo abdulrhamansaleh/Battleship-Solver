@@ -1,6 +1,8 @@
+import time
 from random import randrange
 from tkinter import DISABLED
 import tkinter as tk
+
 
 def _input_(text):
     letter_input = text[0:1].upper()
@@ -30,21 +32,26 @@ def _input_(text):
     return row_val, col_val
 
 
-class board:
+class ai_board:
     def __init__(self):
         # -GRAPHICAL ATTRIBUTES AND VARIABLES- #
         self.turn = 0
         self.attack_counter = 0
         self.win_counter = 0
+
         # LETTER AND NUMBER LIST USED TO DISPLAY COORDINATE LIKE ROW AND COLUMN LABELS:
         letter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
         number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
         # DICTIONARY TO STORE ALL PLACES THAT ARE HIT AND OR MISSED WITH A SPECIFIC KEY
         self.attack_dict = {}
+
         # LIST TO STORE COORDINATES OF GRID
         self.cord_list = []
+
         # DICTIONARY TO APPEND COORDINATES TO BUTTONS CREATED
         self.buttons_dict = {}
+
         # MAIN FRAME SETUP:
         self.board_frame = tk.Tk()
         self.board_frame.title("AI Board")
@@ -52,7 +59,7 @@ class board:
         self.attack_entry = tk.Entry(self.board_frame, bg="white", fg="black")
         self.attack_lbl = tk.Label(self.board_frame, bg="white", fg="black", text="Guess: ")
         self.attack_btn = tk.Button(self.board_frame, bg="black", fg="white", text="Enter")
-        ########################################################################################################################
+
         # MAIN FRAME FOR USER BOARD
         for grid_row in range(50, 550, 50):
             for grid_col in range(50, 550, 50):
@@ -61,6 +68,7 @@ class board:
                 self.buttons_dict[self.cord_list[-1]] = tk.Button(self.board_frame, bg="blue",
                                                                   text=" ")
                 self.buttons_dict[self.cord_list[-1]].place(x=grid_row, y=grid_col, width=50, height=50)
+
         # COLUMN COORDINATES FOR GRID
         for grid_row in range(50, 550, 50):
             counter = 0
@@ -68,6 +76,7 @@ class board:
                 ship_square = tk.Button(self.board_frame, bg="grey", fg="white", text=letter[i], state=DISABLED)
                 ship_square.place(x=50 + counter, y=0, width=50, height=50)
                 counter = counter + 50
+
         # ROW COORDINATES FOR GRID
         for grid_row in range(50, 550, 50):
             counter = 0
@@ -76,32 +85,37 @@ class board:
                 ship_square.place(x=0, y=50 + counter, width=50, height=50)
                 counter = counter + 50
 
-    ########################################################################################################################
+    # RETURNS COUNTER THAT ACCOUNTS FOR NUMBER OF SHIPS SUNK
     def check_for_win(self):
         return self.win_counter
- # METHOD TO BE CALLED WHEN A HIT OCCURS IN ORDER TO GUESS HORIZONTAL AND VERTICAL LOCATIONS AROUND THE SPOT GIVEN
+
+    # METHOD TO GUESS ACCORDING TO PREVIOUS GUESS
     def educated_hit_guess(self, row, col):
         # HORIZONTAL GUESS
         counter = 50
         try:
             for i in range(5):
                 if self.buttons_dict[f'{row + counter}_{col}'].cget("text") == "   ":
-                    self.buttons_dict[f'{row + counter}_{col}'].configure(state=DISABLED, bg="black", text="HIT")
+                    self.buttons_dict[f'{row + counter}_{col}'].configure(state=DISABLED, bg="black",
+                                                                          text="HIT")
                     self.win_counter = self.win_counter + 1
                     counter = counter + 50
             for i in range(5):
                 if self.buttons_dict[f'{row}_{col + counter}'].cget("text") == "   ":
-                    self.buttons_dict[f'{row}_{col + counter}'].configure(state=DISABLED, bg="black", text="HIT")
+                    self.buttons_dict[f'{row}_{col + counter}'].configure(state=DISABLED, bg="black",
+                                                                          text="HIT")
                     self.win_counter = self.win_counter + 1
                     counter = counter + 50
             for i in range(5):
                 if self.buttons_dict[f'{row - counter}_{col}'].cget("text") == "   ":
-                    self.buttons_dict[f'{row - counter}_{col}'].configure(state=DISABLED, bg="black", text="HIT")
+                    self.buttons_dict[f'{row - counter}_{col}'].configure(state=DISABLED, bg="black",
+                                                                          text="HIT")
                     self.win_counter = self.win_counter + 1
                     counter = counter + 50
             for i in range(5):
                 if self.buttons_dict[f'{row}_{col - counter}'].cget("text") == "   ":
-                    self.buttons_dict[f'{row}_{col - counter}'].configure(state=DISABLED, bg="black", text="HIT")
+                    self.buttons_dict[f'{row}_{col - counter}'].configure(state=DISABLED, bg="black",
+                                                                          text="HIT")
                     self.win_counter = self.win_counter + 1
                     counter = counter + 50
         except:
@@ -120,16 +134,6 @@ class board:
             self.educated_hit_guess(row_guess, col_guess)
         elif self.buttons_dict[f'{row_guess}_{col_guess}'].cget("text") == "MISS":
             self.attack_counter = self.attack_counter - 1
-    def attack_ai(self):
-        guess = self.attack_entry.get()
-        row_guess = _input_(guess)[0]
-        col_guess = _input_(guess)[1]
-        if self.buttons_dict[f'{row_guess}_{col_guess}'].cget("text") == "   ":
-            self.buttons_dict[f'{row_guess}_{col_guess}'].configure(state=DISABLED, bg="black", text="HIT")
-            self.win_counter = self.win_counter + 1
-        elif self.buttons_dict[f'{row_guess}_{col_guess}'].cget("bg") == "blue":
-            self.buttons_dict[f'{row_guess}_{col_guess}'].configure(state=DISABLED, bg="white", text="MISS")
-        return
 
     # METHOD TO GENERATE COORDINATES FOR SHIP PLACEMENT
     def random_ship_coord(self):
@@ -142,6 +146,8 @@ class board:
 
     # METHOD TO INVOKE SHIP PLACEMENT FO AI
     def place_ships(self):
+        # loading page and icon gif to say "generating board
+        time.sleep(3)
         self.place_carrier()
         self.place_battleship()
         self.place_cruiser()
