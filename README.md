@@ -4,5 +4,5 @@ A solving algorithim will attempt to solve both randoly generated and user based
 
 # To Play: 
 
-Download Respository and Enjoy ! 
+Download .exe file and enjoy ! 
 
