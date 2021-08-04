@@ -135,8 +135,6 @@ class ai_board:
         elif self.buttons_dict[f'{row_guess}_{col_guess}'].cget("bg") == "blue":
             self.buttons_dict[f'{row_guess}_{col_guess}'].configure(state=DISABLED, bg="white", text="MISS")
             self.educated_hit_guess(row_guess, col_guess)
-        elif self.buttons_dict[f'{row_guess}_{col_guess}'].cget("text") == "MISS":
-            self.attack_counter = self.attack_counter - 1
 
     # METHOD TO GENERATE COORDINATES FOR SHIP PLACEMENT
     def random_ship_coord(self):
@@ -172,43 +170,43 @@ class ai_board:
 
     # METHOD TO PLACE CARRIER SHIP GIVEN RANDOM COORDINATES
     def place_carrier(self):
-        
+
         board_row = self.random_ship_coord()[0]
         board_col = self.random_ship_coord()[1]
         orientation = self.random_ship_coord()[2]
-        
+
         # CHECK HORIZONTAL AND VERTICAL OUT OF BOUNDS TO REASSIGN COORDINATE VARIABLES
         while orientation == 1 and board_row >= 300 or (orientation == 0 and board_col >= 300):
             board_row = self.random_ship_coord()[0]
             board_col = self.random_ship_coord()[1]
             if orientation == 1 and board_row <= 300 or (orientation == 0 and board_col <= 300):
                 break
-                
+
         # PLACES CARRIER SHIP HORIZONTALLY
         if orientation == 1 and board_row <= 300:
             self.placing_ships(board_row, board_col, orientation, "green", 4)
-            
+
         # PLACES CARRIER SHIP VERTICALLY
         elif orientation == 0 and board_col <= 300:
             self.placing_ships(board_row, board_col, orientation, "green", 4)
 
     # METHOD TO PLACE BATTLESHIP SHIP GIVEN RANDOM COORDINATES
     def place_battleship(self):
-        
+
         board_row = self.random_ship_coord()[0]
         board_col = self.random_ship_coord()[1]
         orientation = self.random_ship_coord()[2]
-        
+
         # CHECK HORIZONTAL AND VERTICAL OUT OF BOUNDS TO REASSIGN COORDINATE VARIABLES
         while orientation == 1 and board_row >= 350 or (orientation == 0 and board_col >= 350):
             board_row = self.random_ship_coord()[0]
             board_col = self.random_ship_coord()[1]
             if orientation == 1 and board_row <= 350 or (orientation == 0 and board_col <= 350):
                 break
-                
+
         # PLACES BATTLESHIP SHIP HORIZONTALLY
         if orientation == 1 and board_row <= 350:
-            
+
             # CHECK FOR SHIP OCCUPATION
             while self.buttons_dict[f'{board_row}_{board_col}'].cget("text") != " " \
                     or self.buttons_dict[f'{board_row + 50}_{board_col}'].cget("text") != " " \
@@ -227,10 +225,10 @@ class ai_board:
                         and self.buttons_dict[f'{board_row + 150}_{board_col}'].cget("text") == " ":
                     break
             self.placing_ships(board_row, board_col, orientation, "yellow", 3)
-            
+
         # PLACES BATTLESHIP SHIP VERTICALLY
         elif orientation == 0 and board_col <= 350:
-            
+
             # CHECK FOR SHIP OCCUPATION
             while self.buttons_dict[f'{board_row}_{board_col}'].cget("text") != " " \
                     or self.buttons_dict[f'{board_row}_{board_col + 50}'].cget("text") != " " \
@@ -252,21 +250,21 @@ class ai_board:
 
     # METHOD TO PLACE CRUISER SHIP GIVEN RANDOM COORDINATES
     def place_cruiser(self):
-        
+
         board_row = self.random_ship_coord()[0]
         board_col = self.random_ship_coord()[1]
         orientation = self.random_ship_coord()[2]
-        
+
         # CHECK HORIZONTAL AND VERTICAL OUT OF BOUNDS TO REASSIGN COORDINATE VARIABLES
         while orientation == 1 and board_row >= 400 or (orientation == 0 and board_col >= 400):
             board_row = self.random_ship_coord()[0]
             board_col = self.random_ship_coord()[1]
             if orientation == 1 and board_row <= 400 or (orientation == 0 and board_col <= 400):
                 break
-                
+
         # PLACES CRUISER SHIP HORIZONTALLY
         if orientation == 1 and board_row <= 400:
-            
+
             # CHECK FOR SHIP OCCUPATION
             while self.buttons_dict[f'{board_row}_{board_col}'].cget("text") != " " \
                     or self.buttons_dict[f'{board_row + 50}_{board_col}'].cget("text") != " " \
@@ -283,10 +281,10 @@ class ai_board:
                         and self.buttons_dict[f'{board_row + 100}_{board_col}'].cget("text") == " ":
                     break
             self.placing_ships(board_row, board_col, orientation, "orange", 2)
-            
+
         # PLACES CRUISER SHIP VERTICALLY
         elif orientation == 0 and board_col <= 400:
-            
+
             # CHECK FOR SHIP OCCUPATION
             while self.buttons_dict[f'{board_row}_{board_col}'].cget("text") != " " \
                     or self.buttons_dict[f'{board_row}_{board_col + 50}'].cget("text") != " " \
@@ -306,21 +304,21 @@ class ai_board:
 
     # METHOD TO PLACE SUBMARINE SHIP GIVEN RANDOM COORDINATES
     def place_submarine(self):
-        
+
         board_row = self.random_ship_coord()[0]
         board_col = self.random_ship_coord()[1]
         orientation = self.random_ship_coord()[2]
-        
+
         # CHECK HORIZONTAL AND VERTICAL OUT OF BOUNDS TO REASSIGN COORDINATE VARIABLES
         while orientation == 1 and board_row > 400 or (orientation == 0 and board_col > 400):
             board_row = self.random_ship_coord()[0]
             board_col = self.random_ship_coord()[1]
             if orientation == 1 and board_row <= 400 or (orientation == 0 and board_col <= 400):
                 break
-                
+
         # PLACES SUBMARINE SHIP HORIZONTALLY
         if orientation == 1 and board_row <= 400:
-            
+
             # CHECK FOR SHIP OCCUPATION
             while self.buttons_dict[f'{board_row}_{board_col}'].cget("text") != " " \
                     or self.buttons_dict[f'{board_row + 50}_{board_col}'].cget("text") != " " \
@@ -337,10 +335,10 @@ class ai_board:
                         and self.buttons_dict[f'{board_row + 100}_{board_col}'].cget("text") == " ":
                     break
             self.placing_ships(board_row, board_col, orientation, "red", 2)
-            
+
         # PLACES SUBMARINE SHIP VERTICALLY
         elif orientation == 0 and board_col <= 400:
-            
+
             # CHECK FOR SHIP OCCUPATION
             while self.buttons_dict[f'{board_row}_{board_col}'].cget("text") != " " \
                     or self.buttons_dict[f'{board_row}_{board_col + 50}'].cget("text") != " " \
@@ -360,21 +358,21 @@ class ai_board:
 
     # METHOD TO PLACE DESTROYER SHIP GIVEN RANDOM COORDINATES
     def place_destroyer(self):
-        
+
         board_row = self.random_ship_coord()[0]
         board_col = self.random_ship_coord()[1]
         orientation = self.random_ship_coord()[2]
-        
+
         # CHECK HORIZONTAL AND VERTICAL OUT OF BOUNDS TO REASSIGN COORDINATE VARIABLES
         while orientation == 1 and board_row > 450 or (orientation == 0 and board_col > 450):
             board_row = self.random_ship_coord()[0]
             board_col = self.random_ship_coord()[1]
             if orientation == 1 and board_row <= 450 or (orientation == 0 and board_col <= 450):
                 break
-                
+
         # PLACES DESTROYER SHIP HORIZONTALLY
         if orientation == 1 and board_row <= 450:
-            
+
             # CHECK FOR SHIP OCCUPATION
             while self.buttons_dict[f'{board_row}_{board_col}'].cget("text") != " " \
                     or self.buttons_dict[f'{board_row + 50}_{board_col}'].cget("text") != " ":
@@ -389,10 +387,10 @@ class ai_board:
                         and self.buttons_dict[f'{board_row + 50}_{board_col}'].cget("text") == " ":
                     break
             self.placing_ships(board_row, board_col, orientation, "purple", 1)
-            
+
         # PLACES DESTROYER SHIP VERTICALLY
         elif orientation == 0 and board_col <= 450:
-            
+
             # CHECK FOR SHIP OCCUPATION
             while self.buttons_dict[f'{board_row}_{board_col}'].cget("text") != " " \
                     or self.buttons_dict[f'{board_row}_{board_col + 50}'].cget("text") != " ":
