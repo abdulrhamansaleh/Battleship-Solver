@@ -1,5 +1,13 @@
 
 # Method to load a randomly generated board and solve it with AI
+import time
+from tkinter import CENTER, ttk, HORIZONTAL
+import tkinter as tk
+
+from ai import ai_board
+from user_board import user_board
+
+
 def start_ai_based():
     time.sleep(0.5)
     ai_option_button.destroy()
