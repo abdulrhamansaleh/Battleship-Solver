@@ -4,5 +4,8 @@ A solving algorithim will attempt to solve both randoly generated and user based
 
 # To Play: 
 
-Download .exe file and enjoy ! 
+On A windows Machine:
+
+clone respository and run main.py module by using python main.py 
+
 
